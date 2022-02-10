@@ -5,12 +5,8 @@ import json
 import re
 
 # To set your enviornment variables in your terminal run the following line:
-# export 'BEARER_TOKEN'='<your_bearer_token>'
-
-
-os.environ[
-    'BEARER_TOKEN'] = 'AAAAAAAAAAAAAAAAAAAAAANOZAEAAAAAKqQq4bmvVFjmvPcpmW95CCXFefI%3DjwEXvt6vXAalbdYcBB7bUI52dAyvtDCo2CDBgLVn34sc86o8rk'
-bearer_token = os.environ.get("BEARER_TOKEN")
+# export 'BEARER_TOKEN'='<your_bearer_token>
+bearer_token = 'AAAAAAAAAAAAAAAAAAAAAANOZAEAAAAAKqQq4bmvVFjmvPcpmW95CCXFefI%3DjwEXvt6vXAalbdYcBB7bUI52dAyvtDCo2CDBgLVn34sc86o8rk'
 
 
 def remove_whitespaces(twt):
@@ -70,7 +66,6 @@ def get_rules():
         raise Exception(
             "Cannot get rules (HTTP {}): {}".format(response.status_code, response.text)
         )
-    print(json.dumps(response.json()))
     return response.json()
 
 
@@ -91,7 +86,6 @@ def delete_all_rules(rules):
                 response.status_code, response.text
             )
         )
-    print(json.dumps(response.json()))
 
 
 def set_rules(delete):
@@ -109,14 +103,12 @@ def set_rules(delete):
         raise Exception(
             "Cannot add rules (HTTP {}): {}".format(response.status_code, response.text)
         )
-    print(json.dumps(response.json()))
 
 
 def get_stream(set):
     response = requests.get(
         "https://api.twitter.com/2/tweets/search/stream", auth=bearer_oauth, stream=True,
     )
-    print(response.status_code)
     if response.status_code != 200:
         raise Exception(
             "Cannot get stream (HTTP {}): {}".format(
