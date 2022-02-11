@@ -118,7 +118,7 @@ def get_stream(set):
             )
         )
 
-    producer = KafkaProducer(bootstrap_servers=['10.177.17.31:9092'],
+    producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                              value_serializer=lambda v: json.dumps(v).encode('utf-8'))
 
     for response_line in response.iter_lines():
