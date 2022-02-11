@@ -1,9 +1,23 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import json
+
 from kafka import KafkaConsumer
-from json import loads
+from matplotlib.animation import FuncAnimation
+
 
 consumer = KafkaConsumer(
     'twitter_twt',
-    bootstrap_servers=['localhost:9092'])
+    bootstrap_servers=['10.177.17.31:9092'])
 
-for message in consumer:
-    print(message.value)
+dataFrame = pd.DataFrame(columns=['id', 'text', 'timestamp'])
+
+for msg in consumer:
+    m = json.loads(msg.value)
+    dataFrame = dataFrame.append(m, ignore_index=True)
+    print(m)
+    break
+
+
+
+    print(m)
