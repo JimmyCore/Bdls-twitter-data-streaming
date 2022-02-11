@@ -8,7 +8,7 @@ from matplotlib.animation import FuncAnimation
 
 consumer = KafkaConsumer(
     'twitter_twt',
-    bootstrap_servers=['10.177.17.31:9092'])
+    bootstrap_servers=['localhost:9092'])
 
 dataFrame = pd.DataFrame(columns=['id', 'text', 'timestamp'])
 
