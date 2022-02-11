@@ -9,9 +9,7 @@ import re
 # export 'BEARER_TOKEN'='<your_bearer_token>
 bearer_token = 'AAAAAAAAAAAAAAAAAAAAAANOZAEAAAAAKqQq4bmvVFjmvPcpmW95CCXFefI%3DjwEXvt6vXAalbdYcBB7bUI52dAyvtDCo2CDBgLVn34sc86o8rk'
 
-producer = KafkaProducer(bootstrap_servers=['10.177.17.31:9092'],
-                                     value_serializer=lambda x:
-                                     dumps(x).encode('utf-8'))
+
 
 def remove_whitespaces(twt):
     pattern = re.compile(r'\s+')
@@ -120,6 +118,9 @@ def get_stream(set):
             )
         )
 
+    producer = KafkaProducer(bootstrap_servers=['10.177.17.31:9092'],
+                             value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+
     for response_line in response.iter_lines():
         if response_line:
             json_response = json.loads(response_line)
@@ -129,7 +130,6 @@ def get_stream(set):
             json_obj = json.dumps(json_response, indent=4, sort_keys=True)
             sys.stdout.write(json_obj)
             producer.send('twitter_twt', json_obj)
-            
 
 
 def main():
@@ -137,6 +137,7 @@ def main():
     delete = delete_all_rules(rules)
     set = set_rules(delete)
     get_stream(set)
+
 
 if __name__ == "__main__":
     main()
